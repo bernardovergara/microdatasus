@@ -81,6 +81,21 @@ test_that("sinan-zika at 2016", {
   expect_true("tbl_df" %in% class(sinan_zika))
 })
 
+test_that("sinan-viol recodes notification type and unescapes unicode", {
+  sinan_viol <- process_sinan_viol(data.frame(
+    TP_NOT = c("1", "2", "3", "4", "9"),
+    label = c("N\\u00e3o", "text", "text", "text", "text")
+  ))
+
+  expect_true("tbl_df" %in% class(sinan_viol))
+  expect_equal(
+    sinan_viol$TP_NOT,
+    c("Negativa", "Individual", "Surto", "Agregado", "9")
+  )
+  expect_equal(sinan_viol$label[[1]], "Não")
+  expect_true(all(vapply(sinan_viol, is.character, logical(1))))
+})
+
 test_that("sinan-leishmaniose-visceral at 2023", {
   sinan_leishmaniose_visceral <- process_sinan_leishmaniose_visceral(
     data = sinan_leishmaniose_visceral_sample,

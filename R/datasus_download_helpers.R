@@ -127,7 +127,8 @@
     "SINAN-CHAGAS" = "CHAGBR",
     "SINAN-LEISHMANIOSE-VISCERAL" = "LEIVBR",
     "SINAN-LEISHMANIOSE-TEGUMENTAR" = "LTANBR",
-    "SINAN-LEPTOSPIROSE" = "LEPTBR"
+    "SINAN-LEPTOSPIROSE" = "LEPTBR",
+    "SINAN-VIOL" = "VIOLBR"
   )
   for (system in names(sinan_prefixes)) {
     prefix <- unname(sinan_prefixes[[system]])
@@ -172,7 +173,7 @@
   }
   if (!valid) {
     qualifier <- if (integer) "a single whole number" else "a single number"
-    cli::cli_abort("{.arg {argument}} must be {qualifier}.")
+    cli::cli_abort(paste0("{.arg {argument}} must be ", qualifier, "."))
   }
   invisible(x)
 }
